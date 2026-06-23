@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  --font-sans: 'Outfit', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+
+  /* Meditative Earth Pastel Palette */
+  --bg-app: #FAF7F2;          /* Warm soft cream sand */
+  --color-text-main: #2C3A34;  /* Deep moss green/forest */
+  --color-text-muted: #5D6E66; /* Slate moss green */
+  --color-primary: #5A7E6B;    /* Soft sage green */
+  --color-primary-hover: #486555;
+  --color-primary-light: #E7ECE9;
+  --color-accent: #E89E88;     /* Warm terracotta/coral */
+  --color-gold: #D6A232;       /* Soft gold */
+
+  /* Glassmorphism */
+  --color-bg-card: rgba(255, 255, 255, 0.65);
+  --border-card: 1px solid rgba(255, 255, 255, 0.5);
+  --shadow-sm: 0 4px 6px -1px rgba(90, 126, 107, 0.05), 0 2px 4px -1px rgba(90, 126, 107, 0.03);
+  --shadow-md: 0 10px 20px -3px rgba(44, 58, 52, 0.06), 0 4px 8px -2px rgba(44, 58, 52, 0.04);
+  --shadow-lg: 0 20px 30px -5px rgba(44, 58, 52, 0.08), 0 8px 12px -5px rgba(44, 58, 52, 0.03);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+
+  /* Garden Soil beds */
+  --bg-garden-bed: #EBE5D8;
+  --color-soil: #CDBC9C;
+  --color-soil-shadow: #B7A482;
+  --color-grass: #CBE3DB;
+
+  /* Plant Bloom Colors */
+  --blossom-daisy: #FFF5A3;      /* Pastel Yellow */
+  --blossom-tulip: #FFAEA7;      /* Pastel Coral Red */
+  --blossom-lavender: #D2C4FB;   /* Pastel Purple */
+  --blossom-fern: #7FB093;       /* Sage Green Leaf */
+  --blossom-sunflower: #FFD275;  /* Bright Amber */
+  --blossom-lotus: #FFC4E1;      /* Rosy Lotus Pink */
+  --blossom-orchid: #E5A3FF;     /* Cosmic Violet */
+  --blossom-rose: #E66A8A;       /* Velvet Rose Red */
+
+  /* Grid Layout variables */
+  --grid-gap: 20px;
+  --transition-duration: 0.4s;
+  --transition-bezier: cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-smooth: all var(--transition-duration) var(--transition-bezier);
+}

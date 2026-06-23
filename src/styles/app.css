@@ -1,0 +1,921 @@
+@import './variables.css';
+
+/* Global Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text-main);
+  background: linear-gradient(to bottom, #FAF5EF 0%, #E9ECE9 100%);
+  min-height: 100vh;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+button, input, textarea {
+  font-family: inherit;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(90, 126, 107, 0.2);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(90, 126, 107, 0.4);
+}
+
+/* App Layout */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  gap: 2.5rem;
+}
+
+/* Header */
+.app-header {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.app-title {
+  font-size: 2.75rem;
+  color: var(--color-text-main);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+}
+
+.app-subtitle {
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+  background: var(--color-bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: var(--border-card);
+  box-shadow: var(--shadow-md);
+  border-radius: 24px;
+  padding: 2rem;
+  transition: var(--transition-smooth);
+}
+
+.glass-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Hero Grid Split: Form (Left) & Streak/Garden (Right) */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 380px 1fr;
+  }
+}
+
+/* Daily Entry Form Component */
+.entry-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: fit-content;
+}
+
+.entry-form-title {
+  font-size: 1.5rem;
+  color: var(--color-text-main);
+  margin-bottom: 0.25rem;
+}
+
+.entry-prompt {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--color-primary);
+  font-style: italic;
+  min-height: 2.5rem;
+}
+
+.textarea-wrapper {
+  position: relative;
+}
+
+.gratitude-textarea {
+  width: 100%;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(90, 126, 107, 0.2);
+  border-radius: 16px;
+  padding: 1.25rem;
+  font-size: 1.05rem;
+  color: var(--color-text-main);
+  resize: none;
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.gratitude-textarea:focus {
+  border-color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 4px rgba(90, 126, 107, 0.1);
+}
+
+.char-counter {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 1rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* Plant Selector Tool inside Form */
+.plant-selector-label {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.plant-type-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.plant-select-btn {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(90, 126, 107, 0.1);
+  border-radius: 12px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  aspect-ratio: 1;
+}
+
+.plant-select-btn:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--color-primary);
+}
+
+.plant-select-btn.selected {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.plant-select-icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 0.25rem;
+  stroke: var(--color-text-muted);
+}
+
+.plant-select-btn.selected .plant-select-icon {
+  stroke: var(--color-primary);
+}
+
+.plant-select-name {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.plant-select-btn.selected .plant-select-name {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Seed Color Selector */
+.color-selector {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.color-option {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.color-option:hover {
+  transform: scale(1.15);
+}
+
+.color-option.selected {
+  border-color: var(--color-text-main);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Submit Button */
+.submit-btn {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 1.1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.submit-btn:hover {
+  background: var(--color-primary-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.submit-btn:active {
+  transform: translateY(1px);
+}
+
+.submit-btn:disabled {
+  background: var(--color-text-muted);
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Planted Screen (State when entry completed today) */
+.locked-container {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.locked-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  background: var(--color-primary-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+}
+
+.locked-title {
+  font-size: 1.6rem;
+  color: var(--color-text-main);
+  margin-bottom: 0.75rem;
+}
+
+.locked-desc {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.countdown-timer {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(90, 126, 107, 0.15);
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.countdown-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.countdown-val {
+  font-family: var(--font-sans);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 0.02em;
+}
+
+/* Stats Dashboard (Right Area top) */
+.stats-container {
+  display: flex;
+  justify-content: space-around;
+  gap: 1.5rem;
+  padding: 1.25rem 2rem;
+  margin-bottom: 1.5rem;
+  border-radius: 20px;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stat-val {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stat-val.streak {
+  color: var(--color-accent);
+}
+
+.stat-lbl {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.25rem;
+}
+
+/* Garden Area Container */
+.garden-canvas-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: calc(100% - 7rem); /* Accommodate stats header */
+  min-height: 480px;
+}
+
+.garden-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.garden-title {
+  font-size: 1.5rem;
+  color: var(--color-text-main);
+}
+
+.garden-legend {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* Soilbed Ground Layout */
+.soil-bed {
+  flex-grow: 1;
+  background: var(--bg-garden-bed);
+  border-radius: 20px;
+  position: relative;
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 1.5rem;
+  align-content: center;
+  box-shadow: var(--shadow-inner);
+  border: 1px solid rgba(205, 188, 156, 0.4);
+  overflow: hidden;
+}
+
+@media (min-width: 600px) {
+  .soil-bed {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+}
+
+/* Grass decorative background overlays */
+.grass-overlay-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(to bottom, var(--color-grass) 0%, transparent 100%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Individual Soil Plot */
+.soil-plot {
+  position: relative;
+  background: var(--color-soil);
+  border-radius: 50%;
+  aspect-ratio: 1.6;
+  box-shadow: 
+    inset 0 4px 10px rgba(0, 0, 0, 0.12),
+    inset 0 -2px 5px rgba(255, 255, 255, 0.2),
+    0 4px 6px rgba(44, 58, 52, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  border: 2px solid var(--color-soil-shadow);
+}
+
+.soil-plot:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 
+    inset 0 4px 10px rgba(0, 0, 0, 0.15),
+    0 10px 15px rgba(44, 58, 52, 0.15);
+}
+
+.soil-plot.empty {
+  background: rgba(205, 188, 156, 0.45);
+  border: 2px dashed rgba(183, 164, 130, 0.6);
+  box-shadow: none;
+}
+
+.soil-plot.empty:hover {
+  background: rgba(205, 188, 156, 0.7);
+  border-color: var(--color-primary);
+}
+
+.soil-plot.selectable {
+  animation: soil-pulse 2s infinite ease-in-out;
+  border-color: var(--color-primary);
+}
+
+.plot-index-number {
+  position: absolute;
+  bottom: 4px;
+  font-size: 0.65rem;
+  color: rgba(44, 58, 52, 0.4);
+  font-weight: 700;
+  pointer-events: none;
+}
+
+/* Plant Placement Position inside Soil Plot */
+.plant-wrapper {
+  position: absolute;
+  bottom: 25%; /* Plant stem grows upwards from the center-back of the oval soil */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+/* Animations */
+.animate-seed-drop {
+  animation: seed-fall 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-sprout {
+  animation: sprout-grow 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: bottom center;
+}
+
+.animate-bloom {
+  animation: bloom-burst 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: bottom center;
+}
+
+/* Sways */
+.sway-slow {
+  animation: sway-gentle 4.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.sway-medium {
+  animation: sway-medium 3.2s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* Keyframe Specs */
+@keyframes sway-gentle {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50% { transform: rotate(1.5deg); }
+}
+
+@keyframes sway-medium {
+  0%, 100% { transform: rotate(-3.5deg); }
+  50% { transform: rotate(3.5deg); }
+}
+
+@keyframes seed-fall {
+  0% {
+    transform: translateY(-160px) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(4px) scale(1.1);
+  }
+  90% {
+    transform: translateY(-2px) scale(0.95);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes sprout-grow {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bloom-burst {
+  0% {
+    transform: scale(0.2) rotate(-15deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15) rotate(5deg);
+  }
+  85% {
+    transform: scale(0.95) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes soil-pulse {
+  0%, 100% {
+    border-color: rgba(90, 126, 107, 0.4);
+    box-shadow: 0 0 0 0 rgba(90, 126, 107, 0.25);
+  }
+  50% {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 6px rgba(90, 126, 107, 0);
+  }
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(44, 58, 52, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1.5rem;
+}
+
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modal-enter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modal-enter {
+  0% {
+    transform: translateY(20px) scale(0.96);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(44, 58, 52, 0.05);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-main);
+  transition: var(--transition-smooth);
+}
+
+.modal-close-btn:hover {
+  background: rgba(44, 58, 52, 0.1);
+  transform: rotate(90deg);
+}
+
+/* Detail View of Plant in Modal */
+.plant-detail-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.detail-plant-display {
+  width: 160px;
+  height: 180px;
+  background: var(--bg-garden-bed);
+  border-radius: 50% 50% 20px 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  padding-bottom: 25px;
+  box-shadow: var(--shadow-sm);
+  border: 1px dashed rgba(90, 126, 107, 0.2);
+}
+
+.detail-date {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+.detail-quote-box {
+  position: relative;
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  line-height: 1.6;
+  color: var(--color-text-main);
+  font-style: italic;
+  width: 100%;
+}
+
+.detail-quote-box::before {
+  content: '“';
+  position: absolute;
+  top: 0.25rem;
+  left: 0.75rem;
+  font-size: 3rem;
+  color: rgba(90, 126, 107, 0.15);
+  font-family: Georgia, serif;
+}
+
+.detail-quote-box::after {
+  content: '”';
+  position: absolute;
+  bottom: -1rem;
+  right: 0.75rem;
+  font-size: 3rem;
+  color: rgba(90, 126, 107, 0.15);
+  font-family: Georgia, serif;
+}
+
+.detail-meta {
+  display: flex;
+  gap: 2rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.detail-meta-item strong {
+  color: var(--color-text-main);
+}
+
+/* History List Tab inside Modal */
+.modal-tabs {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(90, 126, 107, 0.15);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.modal-tab-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+.modal-tab-btn.active {
+  color: var(--color-primary);
+}
+
+.modal-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.55rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: 2px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.history-item {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  align-items: center;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+}
+
+.history-item:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(90, 126, 107, 0.25);
+  transform: translateX(2px);
+}
+
+.history-item-plant {
+  width: 50px;
+  height: 55px;
+  background: rgba(90, 126, 107, 0.08);
+  border-radius: 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 5px;
+  flex-shrink: 0;
+}
+
+.history-item-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.history-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-item-date {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+
+.history-item-text {
+  font-size: 0.95rem;
+  color: var(--color-text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+/* Developer Control Panel */
+.dev-panel {
+  margin-top: auto;
+  background: rgba(44, 58, 52, 0.03);
+  border: 1px dashed rgba(90, 126, 107, 0.25);
+  border-radius: 16px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.dev-panel-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dev-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dev-btn {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(44, 58, 52, 0.15);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-text-main);
+  transition: var(--transition-smooth);
+}
+
+.dev-btn:hover {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+}
+
+.dev-btn.danger {
+  color: #c0392b;
+}
+
+.dev-btn.danger:hover {
+  background: #fdf0ed;
+  border-color: #e74c3c;
+}
+
+/* Info footer */
+.app-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.app-footer a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
+}
